@@ -13,9 +13,7 @@
 //#include "../Arithmetic/Arithmetic_i.h"
 #include "D:/Work/Andrej71Fs/Src/Arithmetic/Arithmetic/Arithmetic_i.c"
 
-class CArithmeticEvents : //public _IArithmeticEvents //IDispatch
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public IDispatchImpl<_IArithmeticEvents, &DIID__IArithmeticEvents, &LIBID_ArithmeticLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+class CArithmeticEvents : public _IArithmeticEvents
 {
 public:
 
@@ -25,6 +23,7 @@ public:
         if (riid == IID_IUnknown || riid == __uuidof(_IArithmeticEvents))
         {
             *ppvObject = this;
+            AddRef();
             return S_OK;
         }
         return E_NOINTERFACE;
@@ -41,6 +40,22 @@ public:
             delete this;
         }
         return ulRefCount;
+    }
+
+    // Implement IDispatch methods
+    STDMETHOD(GetTypeInfoCount)(UINT* pctinfo) override { return E_NOTIMPL; }
+    STDMETHOD(GetTypeInfo)(UINT iTInfo, LCID lcid, ITypeInfo** ppTInfo) override { return E_NOTIMPL; }
+    STDMETHOD(GetIDsOfNames)(REFIID riid, LPOLESTR* rgszNames, UINT cNames, LCID lcid, DISPID* rgDispId) override { return E_NOTIMPL; }
+
+    STDMETHOD(Invoke)(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr) override {
+        // Handle events here
+
+        BSTR op = pDispParams->rgvarg[3].bstrVal;
+        double a = pDispParams->rgvarg[2].dblVal;
+        double b = pDispParams->rgvarg[1].dblVal;
+        double result = pDispParams->rgvarg[0].dblVal;
+        OnOperation(op, a, b, result);
+        return S_OK;
     }
 
     STDMETHODIMP OnOperation(BSTR operation, DOUBLE a, DOUBLE b, DOUBLE result)
