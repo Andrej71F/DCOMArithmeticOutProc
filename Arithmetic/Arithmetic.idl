@@ -1,0 +1,49 @@
+// Arithmetic.idl : IDL source for Arithmetic
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Arithmetic.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+    object,
+        uuid(27A2F3BE-7420-45D8-9C8E-76BDAA2B92CC),
+        dual,
+        nonextensible,
+        pointer_default(unique)
+]
+interface IArithmetic : IDispatch
+{
+    [id(1), helpstring("method Add")] HRESULT Add([in] DOUBLE a, [in] DOUBLE b, [out, retval] DOUBLE* result);
+    [id(2), helpstring("method Subtract")] HRESULT Subtract([in] DOUBLE a, [in] DOUBLE b, [out, retval] DOUBLE* result);
+    [id(3), helpstring("method ProcessXML")] HRESULT ProcessXML([in] BSTR xmlData);
+    [id(4), helpstring("method ProcessXMLFromFile")] HRESULT ProcessXMLFromFile([in] BSTR filePath);
+};
+
+[
+    uuid(8e69c810-c66f-4eda-8bea-c974abb32685),
+        version(1.0),
+]
+library ArithmeticLib
+{
+    importlib("stdole2.tlb");
+    [
+        uuid(840e05c8-9263-41db-8427-a978745b20fa)
+    ]
+        dispinterface _IArithmeticEvents
+    {
+        properties:
+        methods:
+            [id(1), helpstring("method OnOperation")] HRESULT OnOperation([in] BSTR operation,[in] DOUBLE a,[in] DOUBLE b,[in] DOUBLE result);
+    };
+    [
+        uuid(24d8676a-8e19-428e-a2cc-db9fd841c9c1)
+    ]
+        coclass Arithmetic
+    {
+        [default] interface IArithmetic;
+        [default, source] dispinterface _IArithmeticEvents;
+    };
+};

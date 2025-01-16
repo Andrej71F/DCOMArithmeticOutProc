@@ -1,0 +1,16 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {24d8676a-8e19-428e-a2cc-db9fd841c9c1} = s 'Arithmetic class'
+		{
+			ForceRemove Programmable
+			LocalServer32 = s '%MODULE%'
+			{
+				val ServerExecutable = s '%MODULE_RAW%'
+			}
+			TypeLib = s '{8e69c810-c66f-4eda-8bea-c974abb32685}'
+			Version = s '1.0'
+		}
+	}
+}

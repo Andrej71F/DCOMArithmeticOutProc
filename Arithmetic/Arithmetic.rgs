@@ -1,0 +1,26 @@
+HKCR
+{
+	Exe.OutProc.Arithmetic.1 = s 'Arithmetic class'
+	{
+		CLSID = s '{24d8676a-8e19-428e-a2cc-db9fd841c9c1}'
+	}
+	Exe.OutProc.Arithmetic = s 'Arithmetic class'
+	{		
+		CurVer = s 'Exe.OutProc.Arithmetic.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {24d8676a-8e19-428e-a2cc-db9fd841c9c1} = s 'Arithmetic class'
+		{
+			ProgID = s 'Exe.OutProc.Arithmetic.1'
+			VersionIndependentProgID = s 'Exe.OutProc.Arithmetic'
+			ForceRemove Programmable
+			LocalServer32 = s '%MODULE%'
+			{
+				val ServerExecutable = s '%MODULE_RAW%'
+			}
+			TypeLib = s '{24d8676a-8e19-428e-a2cc-db9fd841c9c1}'
+			Version = s '1.0'
+		}
+	}
+}
