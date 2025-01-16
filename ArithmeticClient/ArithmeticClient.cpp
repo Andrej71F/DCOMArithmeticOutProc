@@ -13,7 +13,9 @@
 //#include "../Arithmetic/Arithmetic_i.h"
 #include "D:/Work/Andrej71Fs/Src/Arithmetic/Arithmetic/Arithmetic_i.c"
 
-class CArithmeticEvents : public _IArithmeticEvents //IDispatch
+class CArithmeticEvents : //public _IArithmeticEvents //IDispatch
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public IDispatchImpl<_IArithmeticEvents, &DIID__IArithmeticEvents, &LIBID_ArithmeticLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
 
@@ -30,29 +32,15 @@ public:
 
     STDMETHODIMP_(ULONG) AddRef()
     {
-        return 2;
+        return InterlockedIncrement(&m_refCount);
     }
     STDMETHODIMP_(ULONG) Release()
     {
-        return 1;
-    }
-
-    // IDispatch methods
-    STDMETHOD(GetTypeInfoCount)(UINT* pctinfo) override {
-        // Implementierung
-        return S_OK;
-    }
-    STDMETHOD(GetTypeInfo)(UINT iTInfo, LCID lcid, ITypeInfo** ppTInfo) override {
-        // Implementierung
-        return S_OK;
-    }
-    STDMETHOD(GetIDsOfNames)(REFIID riid, LPOLESTR* rgszNames, UINT cNames, LCID lcid, DISPID* rgDispId) override {
-        // Implementierung
-        return S_OK;
-    }
-    STDMETHOD(Invoke)(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr) override {
-        // Implementierung
-        return S_OK;
+        ULONG ulRefCount = InterlockedDecrement(&m_refCount);
+        if (0 == ulRefCount) {
+            delete this;
+        }
+        return ulRefCount;
     }
 
     STDMETHODIMP OnOperation(BSTR operation, DOUBLE a, DOUBLE b, DOUBLE result)
@@ -61,6 +49,9 @@ public:
         std::cout << "event!\n";
         return S_OK;
     }
+
+private:
+    LONG m_refCount = 1;
 };
 
 BSTR ReadXMLFromFile(const wchar_t* filePath)
