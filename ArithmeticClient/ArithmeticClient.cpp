@@ -2,8 +2,6 @@
 //
 
 #include <iostream>
-
-#include <iostream>
 #include <atlbase.h>
 #include <atlcom.h>
 #import "../Arithmetic/x64/Debug/Arithmetic.tlb" no_namespace raw_interfaces_only
@@ -12,6 +10,9 @@
 #include <comutil.h>
 //#include "../Arithmetic/Arithmetic_i.h"
 #include "D:/Work/Andrej71Fs/Src/Arithmetic/Arithmetic/Arithmetic_i.c"
+
+#include "ArithmeticEventsSink.h"
+#include "ArithmeticEventsSink.cpp"
 
 class CArithmeticEvents : public _IArithmeticEvents
 {
@@ -94,7 +95,8 @@ int main()
 
         if (SUCCEEDED(hr) && pArithmetic != NULL)
         {
-            CArithmeticEvents events;
+            //CArithmeticEvents events;
+            CArithmeticSink events;
             CComPtr<IConnectionPointContainer> spCPC;
             CComPtr<IConnectionPoint> spCP;
             DWORD dwCookie;

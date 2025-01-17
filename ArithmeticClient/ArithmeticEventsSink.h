@@ -1,0 +1,8 @@
+#pragma once
+
+#include <atlbase.h>
+#include <atlcom.h>
+
+// {A5243830-5BBC-491F-9B2B-AF94B438B2CE}
+DEFINE_GUID(CLSID_ArithmeticEventsSink,
+    0xa5243830, 0x5bbc, 0x491f, 0x9b, 0x2b, 0xaf, 0x94, 0xb4, 0x38, 0xb2, 0xce);
