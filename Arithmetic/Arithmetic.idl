@@ -37,6 +37,7 @@ library ArithmeticLib
         properties:
         methods:
             [id(1), helpstring("method OnOperation")] HRESULT OnOperation([in] BSTR operation,[in] DOUBLE a,[in] DOUBLE b,[in] DOUBLE result);
+            [id(2), helpstring("method OnResult")] HRESULT OnResult([in] BSTR operation);
     };
     [
         uuid(24d8676a-8e19-428e-a2cc-db9fd841c9c1)
