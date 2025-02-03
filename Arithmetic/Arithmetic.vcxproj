@@ -211,12 +211,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arithmetic.h" />
     <ClInclude Include="Arithmetic_i.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="xdlldata.h" />
+    <ClInclude Include="_IArithmeticEvents_CP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arithmetic.cpp" />
